@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UJI COBA TES KEMAMPUAN AKADEMIK (TKA) - UPT SD NEGERI SUMBERARUM</title>
+    <style>
+        /* Base Styling & Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Arial+Narrow:ital,wght@0,400;0,700;1,400&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 900px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+            position: relative;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Header / Judul */
+        .header-title {
+            font-family: 'Arial Narrow', 'Arial Nova Cond', Arial, sans-serif;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 24px;
+            line-height: 1.4;
+            color: #1a365d;
+            margin-bottom: 25px;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo-svg {
+            width: 100px;
+            height: 100px;
+        }
+
+        /* Login Form */
+        .login-form {
+            max-width: 450px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #2d3748;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 15px;
+            font-family: Arial, sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: #2b6cb0;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c5282;
+        }
+
+        .alert-box {
+            background-color: #fed7d7;
+            border: 1px solid #f56565;
+            color: #9b2c2c;
+            padding: 12px 15px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            display: none;
+            text-align: center;
+        }
+
+        .footer-credit {
+            position: absolute;
+            bottom: 15px;
+            right: 25px;
+            font-size: 12px;
+            color: #718096;
+            font-style: italic;
+        }
+
+        /* Modal Popup */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 550px;
+            width: 90%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2b6cb0;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+
+        .modal-info {
+            background-color: #edf2f7;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .modal-instructions {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .modal-instructions ol {
+            padding-left: 20px;
+            margin-top: 8px;
+            margin-bottom: 12px;
+        }
+
+        .btn-start {
+            width: 100%;
+            background-color: #38a169;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-start:hover {
+            background-color: #2f855a;
+        }
+
+        /* Interface Soal */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .timer-badge {
+            background-color: #e53e3e;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .nav-numbers {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            width: 36px;
+            height: 36px;
+            border: 1px solid #cbd5e0;
+            background-color: #edf2f7;
+            color: #4a5568;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-btn.active {
+            border: 2px solid #3182ce;
+            color: #3182ce;
+            background-color: #ebf8ff;
+        }
+
+        .nav-btn.answered {
+            background-color: #38a169 !important;
+            color: white !important;
+            border-color: #38a169 !important;
+        }
+
+        .nav-btn.doubtful {
+            background-color: #ecc94b !important;
+            color: #744210 !important;
+            border-color: #d69e2e !important;
+        }
+
+        /* Formatting Teks Soal & Stimulus Sesuai Spesifikasi */
+        .stimulus-text, .question-text, .question-instruction, .option-text {
+            font-family: Arial, sans-serif;
+            font-size: 14.66px; /* Equivalent to 11pt */
+            line-height: 1.6;
+            color: #2d3748;
+        }
+
+        .stimulus-box {
+            background-color: #f7fafc;
+            border-left: 4px solid #3182ce;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 0 6px 6px 0;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .source-text {
+            font-family: Arial, sans-serif;
+            font-size: 10.66px; /* Equivalent to 8pt */
+            font-style: italic;
+            color: #718096;
+            margin-top: 8px;
+        }
+
+        .source-text a {
+            color: #3182ce;
+            text-decoration: underline;
+        }
+
+        .question-box {
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question-instruction {
+            font-style: italic;
+            color: #4a5568;
+            margin-bottom: 12px;
+        }
+
+        /* Opsi Jawaban PG (No 1) */
+        .options-pg {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-item-pg {
+            display: flex;
+            align-items: center;
+            padding: 10px 14px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-item-pg:hover {
+            background-color: #f7fafc;
+        }
+
+        .option-item-pg.selected {
+            border-color: #3182ce;
+            background-color: #ebf8ff;
+        }
+
+        .badge-radio {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid #a0aec0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+            margin-right: 12px;
+            flex-shrink: 0;
+            color: #4a5568;
+        }
+
+        .option-item-pg.selected .badge-radio {
+            background-color: #3182ce;
+            color: white;
+            border-color: #3182ce;
+        }
+
+        /* Opsi Jawaban MCMA (No 2) */
+        .options-mcma {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-item-mcma {
+            display: flex;
+            align-items: center;
+            padding: 10px 14px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-item-mcma:hover {
+            background-color: #f7fafc;
+        }
+
+        .option-item-mcma.selected {
+            border-color: #3182ce;
+            background-color: #ebf8ff;
+        }
+
+        .badge-checkbox {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #a0aec0;
+            border-radius: 4px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .option-item-mcma.selected .badge-checkbox {
+            background-color: #3182ce;
+            border-color: #3182ce;
+        }
+
+        .badge-checkbox::after {
+            content: "✓";
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .option-item-mcma.selected .badge-checkbox::after {
+            display: block;
+        }
+
+        /* Tabel Kategori Benar-Salah (No 3) */
+        .category-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-family: Arial, sans-serif;
+            font-size: 14.66px;
+        }
+
+        .category-table th, .category-table td {
+            border: 1px solid #cbd5e0;
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        .category-table th {
+            background-color: #edf2f7;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .col-check {
+            width: 70px;
+            text-align: center !important;
+            cursor: pointer;
+        }
+
+        .check-cell {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #a0aec0;
+            border-radius: 4px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .col-check.selected .check-cell {
+            background-color: #38a169;
+            border-color: #38a169;
+        }
+
+        .col-check.selected .check-cell::after {
+            content: "✓";
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Bottom Controls */
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px solid #e2e8f0;
+            padding-top: 15px;
+            margin-top: 20px;
+        }
+
+        .footer-left {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-sec {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e0;
+            background-color: #ffffff;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            color: #4a5568;
+        }
+
+        .btn-sec:hover {
+            background-color: #edf2f7;
+        }
+
+        .btn-sec.active-doubt {
+            background-color: #ecc94b;
+            color: #744210;
+            border-color: #d69e2e;
+        }
+
+        .btn-finish {
+            background-color: #38a169;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-finish:hover {
+            background-color: #2f855a;
+        }
+
+        /* Screen Results */
+        .result-box {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .result-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2b6cb0;
+            margin-bottom: 10px;
+        }
+
+        .result-sub {
+            font-size: 16px;
+            color: #4a5568;
+            margin-bottom: 30px;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3182ce, #2b6cb0);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 30px auto;
+            box-shadow: 0 6px 15px rgba(49, 130, 206, 0.4);
+        }
+
+        .score-val {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .score-lbl {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .hide {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- SCREEN 1: LOGIN -->
+        <div id="screen-login">
+            <div class="logo-container">
+                <!-- Logo Sekolah SVG -->
+                <svg class="logo-svg" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="46" fill="#1a365d" stroke="#ecc94b" stroke-width="4"/>
+                    <circle cx="50" cy="50" r="38" fill="#ffffff"/>
+                    <path d="M50 22 L75 35 L50 48 L25 35 Z" fill="#2b6cb0"/>
+                    <path d="M33 42 L33 58 C33 65 67 65 67 58 L67 42" fill="none" stroke="#2b6cb0" stroke-width="3"/>
+                    <path d="M50 48 L50 75" stroke="#ecc94b" stroke-width="4"/>
+                    <path d="M35 75 C45 70 55 70 65 75 L65 72 C55 67 45 67 35 72 Z" fill="#38a169"/>
+                </svg>
+            </div>
+
+            <div class="header-title">
+                UJI COBA TES KEMAMPUAN AKADEMIK (TKA)<br>
+                UPT SD NEGERI SUMBERARUM<br>
+                TAHUN 2027
+            </div>
+
+            <div id="alert-token" class="alert-box">
+                Maaf, token yang Anda masukkan salah. Silakan ulangi Kembali.
+            </div>
+
+            <form id="form-login" class="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="nama">Nama Lengkap Peserta</label>
+                    <input type="text" id="nama" required placeholder="Masukkan Nama Lengkap">
+                </div>
+                <div class="form-group">
+                    <label for="nisn">NISN</label>
+                    <input type="text" id="nisn" required placeholder="Masukkan NISN">
+                </div>
+                <div class="form-group">
+                    <label for="token">Token Ujian</label>
+                    <input type="text" id="token" required placeholder="Masukkan Token (Contoh: C1KA3R)" style="text-transform:uppercase;">
+                </div>
+                <button type="submit" class="btn-submit">MASUK UJIAN</button>
+            </form>
+        </div>
+
+        <!-- SCREEN 2: SOAL (QUIZ) -->
+        <div id="screen-quiz" class="hide">
+            <div class="quiz-header">
+                <div class="nav-numbers">
+                    <button class="nav-btn active" onclick="jumpToSoal(0)">1</button>
+                    <button class="nav-btn" onclick="jumpToSoal(1)">2</button>
+                    <button class="nav-btn" onclick="jumpToSoal(2)">3</button>
+                </div>
+                <div class="timer-badge" id="timer-display">10:00</div>
+            </div>
+
+            <!-- Area Soal Dinamis -->
+            <div id="question-container"></div>
+
+            <div class="quiz-footer">
+                <div class="footer-left">
+                    <button class="btn-sec" onclick="toggleRagu()">Ragu-ragu</button>
+                    <button class="btn-sec" onclick="nextSoal()">Lewati</button>
+                </div>
+                <button id="btn-finish" class="btn-finish hide" onclick="finishQuiz()">Selesai</button>
+            </div>
+        </div>
+
+        <!-- SCREEN 3: HASIL -->
+        <div id="screen-result" class="hide">
+            <div class="result-box">
+                <div class="result-title">Selamat!</div>
+                <div class="result-sub">Anda telah menyelesaikan Uji Coba Tes Kemampuan Akademik (TKA).</div>
+                <div class="score-circle">
+                    <div class="score-lbl">NILAI AKHIR</div>
+                    <div class="score-val" id="score-text">0.00</div>
+                </div>
+                <button class="btn-submit" style="max-width: 200px;" onclick="location.reload()">Ulangi Ujian</button>
+            </div>
+        </div>
+
+        <!-- Credit Footer -->
+        <div class="footer-credit">
+            Dibuat oleh: Kholistiana Umi Nafiah
+        </div>
+    </div>
+
+    <!-- MODAL POPUP PETUNJUK -->
+    <div id="modal-petunjuk" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-title">Konfirmasi Data & Petunjuk Ujian</div>
+            <div class="modal-info">
+                <p><strong>Nama:</strong> <span id="modal-nama">-</span></p>
+                <p><strong>NISN:</strong> <span id="modal-nisn">-</span></p>
+            </div>
+            <div class="modal-instructions">
+                <strong>Petunjuk Pengerjaan:</strong>
+                <ol>
+                    <li>Soal terdiri dari 3 butir soal dengan waktu mengerjakan maksimal 10 menit.</li>
+                    <li>Periksa Kembali jawaban Anda. Pastikan Anda menjawab dengan benar.</li>
+                </ol>
+                <p style="text-align: center; font-weight: bold; margin-top: 10px; color: #2b6cb0;">Selamat mengerjakan!</p>
+            </div>
+            <button class="btn-start" onclick="startQuiz()">Saya Mengerti, Saya Siap Mengerjakan</button>
+        </div>
+    </div>
+
+    <script>
+        // Data Soal & Kunci Jawaban
+        const stimulusHTML = `
+            <div class="stimulus-box">
+                <div class="stimulus-text">
+                    <strong>Keindahan Air Terjun Nglirip dan Legenda Dewi Nglirip</strong><br><br>
+                    Air Terjun Nglirip terletak di Tuban. Tinggi air terjun ini tiga puluh meter. Air terjun ini sangat menakjubkan. Pemandangan alam sekitarnya sangat indah. Pepohonan hijau tumbuh di sekitar tebing. Warna kolam air terjun hijau toska. Sumber air berasal dari Hutan Krawak. Tempat wisata ini buka setiap hari. Harga tiket masuk sangat terjangkau. Pengunjung datang untuk menikmati alam. Wisatawan dapat mengambil foto bersama. Ada cerita legenda di tempat tersebut. Tokoh cerita yaitu Dewi Nglirip. Cerita ini berkisah tentang cinta. Cinta mereka tidak mendapat restu. Keluarga menolak perbedaan status sosial. Dewi Nglirip memilih menyendiri di gua. Kisah ini menjadi legenda lokal. Pengunjung belajar menghargai perasaan orang. Saling menghormati adalah amanat penting. Nilai kasih sayang ada dalam cerita. Nilai kesetiaan juga ada di sana. Kebersihan lingkungan harus selalu dijaga. Masyarakat merawat alam dengan baik. Air Terjun Nglirip sangat mempesona.
+                </div>
+                <div class="source-text">
+                    (Sumber: <a href="https://www.traveloka.com/id-id/explore/destination/air-terjun-nglirip-di-tuban-trp/470866" target="_blank">https://www.traveloka.com/id-id/explore/destination/air-terjun-nglirip-di-tuban-trp/470866</a>)
+                </div>
+            </div>
+        `;
+
+        const questionsData = [
+            {
+                type: 'PG',
+                text: 'Kata khusus dalam bidang pariwisata yang terdapat pada teks tersebut adalah ....',
+                options: [
+                    'panorama, pemandangan, flora',
+                    'wisatawan, destinasi, tempat wisata',
+                    'wisatawan, tiket masuk, tempat wisata',
+                    'pengunjung, tiket masuk, cagar alam'
+                ],
+                key: 2 // Index C
+            },
+            {
+                type: 'MCMA',
+                text: 'Berdasarkan teks tersebut, manakah pernyataan yang sesuai dengan informasi tersurat mengenai fisik dan keberadaan tempat wisata Air Terjun Nglirip?',
+                instruction: '(Pilih dua jawaban benar)',
+                options: [
+                    'Aliran air terjun tersebut bersumber dari kawasan Hutan Krawak.',
+                    'Pengunjung dapat menikmati kolam air terjun berwarna hijau toska.',
+                    'Tempat wisata ini hanya buka pada hari libur dan akhir pekan.'
+                ],
+                key: [0, 1]
+            },
+            {
+                type: 'CATEGORY',
+                text: 'Berdasarkan teks Keindahan Air Terjun Nglirip dan Legenda Dewi Nglirip, tentukan kebenaran amanat yang dapat dipetik dari isi teks tersebut!',
+                statements: [
+                    { text: 'Kita harus menghormati sesama manusia tanpa membeda-bedakan status sosial.', key: 'benar' },
+                    { text: 'Kita wajib merawat dan menjaga kebersihan lingkungan alam di sekitar kita.', key: 'benar' },
+                    { text: 'Kita sebaiknya tidak mengunjungi tempat wisata yang memiliki legenda mistis.', key: 'salah' }
+                ]
+            }
+        ];
+
+        // State Aplikasi
+        let currentIdx = 0;
+        let userAnswers = [null, [], {}];
+        let doubtfulState = [false, false, false];
+        let timerInterval = null;
+        let secondsLeft = 600;
+
+        // Login Handling
+        function handleLogin(e) {
+            e.preventDefault();
+            const token = document.getElementById('token').value.trim().toUpperCase();
+            const nama = document.getElementById('nama').value.trim();
+            const nisn = document.getElementById('nisn').value.trim();
+
+            if (token === 'C1KA3R') {
+                document.getElementById('alert-token').style.display = 'none';
+                document.getElementById('modal-nama').innerText = nama;
+                document.getElementById('modal-nisn').innerText = nisn;
+                document.getElementById('modal-petunjuk').classList.add('active');
+            } else {
+                document.getElementById('alert-token').style.display = 'block';
+            }
+        }
+
+        // Start Quiz
+        function startQuiz() {
+            document.getElementById('modal-petunjuk').classList.remove('active');
+            document.getElementById('screen-login').classList.add('hide');
+            document.getElementById('screen-quiz').classList.remove('hide');
+
+            renderSoal();
+            startTimer();
+        }
+
+        // Timer
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                secondsLeft--;
+                let m = Math.floor(secondsLeft / 60);
+                let s = secondsLeft % 60;
+                document.getElementById('timer-display').innerText = 
+                    `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                
+                if (secondsLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        // Render Soal
+        function renderSoal() {
+            const container = document.getElementById('question-container');
+            const qData = questionsData[currentIdx];
+            let html = stimulusHTML;
+
+            html += `<div class="question-box">`;
+            html += `<div class="question-text">Soal No. ${currentIdx + 1}</div>`;
+            html += `<div class="question-text" style="font-weight:normal;">${qData.text}</div>`;
+            
+            if (qData.instruction) {
+                html += `<div class="question-instruction">${qData.instruction}</div>`;
+            }
+
+            // Type 1: PG
+            if (qData.type === 'PG') {
+                const labels = ['A', 'B', 'C', 'D'];
+                html += `<div class="options-pg">`;
+                qData.options.forEach((opt, idx) => {
+                    const sel = userAnswers[0] === idx ? 'selected' : '';
+                    html += `
+                        <div class="option-item-pg ${sel}" onclick="selectPG(${idx})">
+                            <div class="badge-radio">${labels[idx]}</div>
+                            <div class="option-text">${opt}</div>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+            }
+
+            // Type 2: MCMA
+            else if (qData.type === 'MCMA') {
+                html += `<div class="options-mcma">`;
+                qData.options.forEach((opt, idx) => {
+                    const sel = userAnswers[1].includes(idx) ? 'selected' : '';
+                    html += `
+                        <div class="option-item-mcma ${sel}" onclick="toggleMCMA(${idx})">
+                            <div class="badge-checkbox"></div>
+                            <div class="option-text">${opt}</div>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+            }
+
+            // Type 3: CATEGORY
+            else if (qData.type === 'CATEGORY') {
+                html += `
+                    <table class="category-table">
+                        <thead>
+                            <tr>
+                                <th>Pernyataan</th>
+                                <th style="width:70px; text-align:center;">Benar</th>
+                                <th style="width:70px; text-align:center;">Salah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                qData.statements.forEach((st, idx) => {
+                    const val = userAnswers[2][idx];
+                    const selBenar = val === 'benar' ? 'selected' : '';
+                    const selSalah = val === 'salah' ? 'selected' : '';
+
+                    html += `
+                        <tr>
+                            <td>${st.text}</td>
+                            <td class="col-check ${selBenar}" onclick="selectCategory(${idx}, 'benar')">
+                                <div class="check-cell"></div>
+                            </td>
+                            <td class="col-check ${selSalah}" onclick="selectCategory(${idx}, 'salah')">
+                                <div class="check-cell"></div>
+                            </td>
+                        </tr>
+                    `;
+                });
+                html += `</tbody></table>`;
+            }
+
+            html += `</div>`;
+            container.innerHTML = html;
+            updateUIControls();
+        }
+
+        // Answer Handlers
+        function selectPG(idx) {
+            userAnswers[0] = idx;
+            renderSoal();
+        }
+
+        function toggleMCMA(idx) {
+            const arr = userAnswers[1];
+            const p = arr.indexOf(idx);
+            if (p > -1) arr.splice(p, 1);
+            else arr.push(idx);
+            renderSoal();
+        }
+
+        function selectCategory(idx, choice) {
+            userAnswers[2][idx] = choice;
+            renderSoal();
+        }
+
+        // Control Actions
+        function jumpToSoal(idx) {
+            currentIdx = idx;
+            renderSoal();
+        }
+
+        function nextSoal() {
+            if (currentIdx < 2) {
+                currentIdx++;
+                renderSoal();
+            }
+        }
+
+        function toggleRagu() {
+            doubtfulState[currentIdx] = !doubtfulState[currentIdx];
+            updateUIControls();
+        }
+
+        function updateUIControls() {
+            // Check completeness
+            const btns = document.querySelectorAll('.nav-btn');
+            btns.forEach((btn, i) => {
+                btn.className = 'nav-btn';
+                if (i === currentIdx) btn.classList.add('active');
+
+                let filled = false;
+                if (i === 0 && userAnswers[0] !== null) filled = true;
+                if (i === 1 && userAnswers[1].length > 0) filled = true;
+                if (i === 2 && Object.keys(userAnswers[2]).length === 3) filled = true;
+
+                if (doubtfulState[i]) {
+                    btn.classList.add('doubtful');
+                } else if (filled) {
+                    btn.classList.add('answered');
+                }
+            });
+
+            // Toggle Finish button on last question
+            const finishBtn = document.getElementById('btn-finish');
+            if (currentIdx === 2) {
+                finishBtn.classList.remove('hide');
+            } else {
+                finishBtn.classList.add('hide');
+            }
+
+            // Update Ragu button style
+            const raguBtn = document.querySelector('.btn-sec');
+            if (doubtfulState[currentIdx]) {
+                raguBtn.classList.add('active-doubt');
+            } else {
+                raguBtn.classList.remove('active-doubt');
+            }
+        }
+
+        // Calculate Score & Finish
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            let scoreCount = 0;
+
+            // Q1 Evaluation (PG)
+            if (userAnswers[0] === questionsData[0].key) {
+                scoreCount += 1;
+            }
+
+            // Q2 Evaluation (MCMA)
+            const u2 = userAnswers[1].sort().join(',');
+            const k2 = questionsData[1].key.sort().join(',');
+            if (u2 === k2) {
+                scoreCount += 1;
+            }
+
+            // Q3 Evaluation (CATEGORY)
+            let catCorrect = true;
+            questionsData[2].statements.forEach((st, idx) => {
+                if (userAnswers[2][idx] !== st.key) {
+                    catCorrect = false;
+                }
+            });
+            if (catCorrect && Object.keys(userAnswers[2]).length === 3) {
+                scoreCount += 1;
+            }
+
+            // Final Calculation
+            const finalScore = (scoreCount * 100) / 3;
+
+            document.getElementById('screen-quiz').classList.add('hide');
+            document.getElementById('screen-result').classList.remove('hide');
+            document.getElementById('score-text').innerText = finalScore.toFixed(2);
+        }
+    </script>
+</body>
+</html>
